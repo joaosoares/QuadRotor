@@ -20,7 +20,9 @@
 #define XBBEE_STRENGHT PORTBbits.RB9
 //Additional definitions (included here for changing them easily)
 #define XBEE_BAUD 129 // [ 20000000 (fpb) / 4 * 250000 (desired baud) ]- 1
+char Xbee_Last_Read;
 
+void PPM1_On(int);
 
 /* Function: Xbee_Serial_Init
  *
@@ -40,9 +42,9 @@ void Xbee_Init()
 {
 	// Placeholder for Xbee reset (as soon as timer routine is working)
 	U2BBRG = XBEE_BAUD; // Set baud rate
-	U2BMODE = 0x8008; //Enable UART for 8-bit, no parity, 1 stop bit
 	U2BSTA = 0; // Clear control register (reset)
-	U2BSTASET = (1 << U2BSTAbits.UTXEN) | (1 <<U2BSTAbits.URXEN); //Enable TX/RX
+	U2BMODE = 0x8008; //Enable UART for 8-bit, no parity, 1 stop bit
+	U2BSTASET = 0x1400;
 	mU2BSetIntPriority(3);
 	mU2BRXIntEnable(1); // Enable RX interrupts for UART2B
 	// Placeholder for ADC initializing
@@ -79,5 +81,6 @@ void __ISR(_UART_2B_VECTOR, ipl3) Xbee_Read (void)
 {
 	char data = U2BRXREG;
 	Xbee_Last_Read = data;
+	PPM1_On(900);
 	mU2BRXClearIntFlag();
 }	

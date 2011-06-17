@@ -1,0 +1,1 @@
+basics.o: basics.c
