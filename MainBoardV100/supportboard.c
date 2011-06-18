@@ -60,7 +60,7 @@ void SupportBoard_Write(char data)
 void __ISR(_UART_1A_VECTOR, ipl3) SupportBoard_Receive( void)
 {
 	char data = U1ARXREG;
-	PPM1_On(900);
+	//PPM1_On(900);
 	PORTESET = 0x0020;
 	Xbee_Write(data);
 	mU1ARXClearIntFlag();
