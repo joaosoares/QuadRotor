@@ -14,7 +14,8 @@ main()
 	//Config PORTb for LED2 digital output
 	AD1PCFG = 0x7fff;
 	TRISBCLR = 0x8000;
-	Init_All();	
+	Init_All();
+	Set_High(&PORTE);
 	while(1)
 	{
 		

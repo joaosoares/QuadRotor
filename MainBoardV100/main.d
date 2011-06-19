@@ -1,1 +1,1 @@
-main.o: main.c main.h
+main.o: main.c main.h leds.h

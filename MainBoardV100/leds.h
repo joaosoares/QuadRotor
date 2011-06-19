@@ -11,6 +11,7 @@
 #include <p32xxxx.h>
 #include "plib.h"
 
+#define LED1PORT PORTE
 #define LED1 PORTEbits.RE5 //Location of LED 1
 #define LED2 PORTBbits.RB15 // Location of LED 2
 
