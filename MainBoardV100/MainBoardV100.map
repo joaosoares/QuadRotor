@@ -29,8 +29,8 @@ Microchip PIC32 Memory-Usage Report
 kseg0 Program-Memory Usage
 section                    address  length [bytes]      (dec)  Description
 -------                 ----------  -------------------------  -----------
-.text                   0x9d000000          0x9e8        2536  Application's executable code 
-      Total kseg0_program_mem used  :       0x9e8        2536  0.5% of 0x80000
+.text                   0x9d000000          0xac0        2752  Application's executable code 
+      Total kseg0_program_mem used  :       0xac0        2752  0.5% of 0x80000
 
 kseg0 Boot-Memory Usage
 section                    address  length [bytes]      (dec)  Description
@@ -55,7 +55,7 @@ section                    address  length [bytes]      (dec)  Description
 .bev_excpt              0xbfc00380           0x10          16  BEV-Exception handler 
          Total kseg1_boot_mem used  :        0x20          32  2.7% of 0x490
         --------------------------------------------------------------------------
-         Total Program Memory used  :       0xc18        3096  0.6% of 0x81e00
+         Total Program Memory used  :       0xcf0        3312  0.6% of 0x81e00
         --------------------------------------------------------------------------
 
 
@@ -84,14 +84,10 @@ Discarded input sections
  .bss           0x00000000        0x0 xbee.o
  .reginfo       0x00000000       0x18 xbee.o
  .pdr           0x00000000       0x80 xbee.o
- .data          0x00000000        0x0 propellers.o
- .bss           0x00000000        0x0 propellers.o
- .reginfo       0x00000000       0x18 propellers.o
- .pdr           0x00000000      0x100 propellers.o
  .data          0x00000000        0x0 leds.o
  .bss           0x00000000        0x0 leds.o
  .reginfo       0x00000000       0x18 leds.o
- .pdr           0x00000000       0x20 leds.o
+ .pdr           0x00000000       0xa0 leds.o
  .data          0x00000000        0x0 supportboard.o
  .bss           0x00000000        0x0 supportboard.o
  .reginfo       0x00000000       0x18 supportboard.o
@@ -101,6 +97,10 @@ Discarded input sections
  .bss           0x00000000        0x0 pid.o
  .reginfo       0x00000000       0x18 pid.o
  .pdr           0x00000000       0x20 pid.o
+ .data          0x00000000        0x0 propellers.o
+ .bss           0x00000000        0x0 propellers.o
+ .reginfo       0x00000000       0x18 propellers.o
+ .pdr           0x00000000      0x100 propellers.o
  .text          0x00000000        0x0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(general-exception.o)
  .data          0x00000000        0x0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(general-exception.o)
  .bss           0x00000000        0x0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(general-exception.o)
@@ -173,10 +173,10 @@ Linker script and memory map
 LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/crt0.o
 LOAD main.o
 LOAD xbee.o
-LOAD propellers.o
 LOAD leds.o
 LOAD supportboard.o
 LOAD pid.o
+LOAD propellers.o
                 0x00000001                __MPLAB_BUILD = 0x1
 LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4\libgcc.a
 START GROUP
@@ -504,7 +504,7 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
  *(.startup)
  .startup       0x9fc00490      0x1e0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/crt0.o
 
-.text           0x9d000000      0x9e8
+.text           0x9d000000      0xac0
                 0x9d000000                _text_begin = .
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text          0x9d000000       0x10 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib/crt0.o
@@ -516,60 +516,64 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
                 0x9d000088                Xbee_Init
                 0x9d000104                Xbee_Write
                 0x9d000154                Xbee_Read
- .text          0x9d000288      0x3f0 propellers.o
-                0x9d000288                Timer2_Interrupt
-                0x9d00032c                Timer1_Interrupt
-                0x9d000460                PPM_Init
-                0x9d0004d8                PPM1_On
-                0x9d000550                Timer1_Init
-                0x9d0005dc                PPM1_Poll
- .text          0x9d000678       0x20 leds.o
-                0x9d000678                LED_Init
- .text          0x9d000698      0x20c supportboard.o
-                0x9d000698                SupportBoard_Init
-                0x9d000724                SupportBoard_Write
-                0x9d000774                SupportBoard_Receive
+ .text          0x9d000288       0xf8 leds.o
+                0x9d000288                LED_Init
+                0x9d0002d0                LED2_On
+                0x9d0002fc                LED1_On
+                0x9d000328                LED2_Off
+                0x9d000354                LED1_Off
+ .text          0x9d000380      0x20c supportboard.o
+                0x9d000380                SupportBoard_Init
+                0x9d00040c                SupportBoard_Write
+                0x9d00045c                SupportBoard_Receive
+ .text          0x9d00058c      0x3f0 propellers.o
+                0x9d00058c                Timer2_Interrupt
+                0x9d000630                Timer1_Interrupt
+                0x9d000764                PPM_Init
+                0x9d0007dc                PPM1_On
+                0x9d000854                Timer1_Init
+                0x9d0008e0                PPM1_Poll
  .text.general_exception
-                0x9d0008a4       0xd0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(general-exception.o)
-                0x9d0008a4                _general_exception_context
+                0x9d00097c       0xd0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(general-exception.o)
+                0x9d00097c                _general_exception_context
  .text._general_exception_handler
-                0x9d000974        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
-                0x9d000974                _general_exception_handler
+                0x9d000a4c        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
+                0x9d000a4c                _general_exception_handler
  .text._bootstrap_exception_handler
-                0x9d00097c        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
-                0x9d00097c                _bootstrap_exception_handler
+                0x9d000a54        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
+                0x9d000a54                _bootstrap_exception_handler
  .text._on_reset
-                0x9d000984        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
-                0x9d000984                _on_reset
+                0x9d000a5c        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
+                0x9d000a5c                _on_reset
  .text._on_bootstrap
-                0x9d00098c        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
-                0x9d00098c                _on_bootstrap
- .text          0x9d000994       0x18 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-nmi-handler.o)
-                0x9d000994                _nmi_handler
+                0x9d000a64        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
+                0x9d000a64                _on_bootstrap
+ .text          0x9d000a6c       0x18 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-nmi-handler.o)
+                0x9d000a6c                _nmi_handler
  .text.INTEnableSystemMultiVectoredInt
-                0x9d0009ac       0x34 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
-                0x9d0009ac                INTEnableSystemMultiVectoredInt
+                0x9d000a84       0x34 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
+                0x9d000a84                INTEnableSystemMultiVectoredInt
  .text.INTEnableInterrupts
-                0x9d0009e0        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
-                0x9d0009e0                INTEnableInterrupts
+                0x9d000ab8        0x8 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
+                0x9d000ab8                INTEnableInterrupts
  *(.text.*personality*)
  *(.gnu.warning)
  *(.mips16.fn.*)
  *(.mips16.call.*)
-                0x9d0009e8                _text_end = .
+                0x9d000ac0                _text_end = .
 
-.rodata         0x9d0009e8        0x0
+.rodata         0x9d000ac0        0x0
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  *(.rodata1)
-                0x9d0009e8                . = ALIGN (0x4)
+                0x9d000ac0                . = ALIGN (0x4)
 
-.sdata2         0x9d0009e8        0x0
+.sdata2         0x9d000ac0        0x0
  *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
-                0x9d0009e8                . = ALIGN (0x4)
+                0x9d000ac0                . = ALIGN (0x4)
 
-.sbss2          0x9d0009e8        0x0
+.sbss2          0x9d000ac0        0x0
  *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
-                0x9d0009e8                . = ALIGN (0x4)
+                0x9d000ac0                . = ALIGN (0x4)
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
@@ -585,12 +589,12 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
  *(.persist .persist.*)
                 0xa0000000                _persist_end = .
 
-.data           0xa0000000        0x0 load address 0x9d0009e8
+.data           0xa0000000        0x0 load address 0x9d000ac0
                 0xa0000000                _data_begin = .
  *(.data .data.* .gnu.linkonce.d.*)
  *(.gnu.linkonce.d.*personality*)
  *(.data1)
-                0x9d0009e8                _data_image_begin = LOADADDR (.data)
+                0x9d000ac0                _data_image_begin = LOADADDR (.data)
 
 .eh_frame
  *(.eh_frame)
@@ -601,7 +605,7 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
  *(.got.plt)
  *(.got)
 
-.sdata          0xa0000000        0x0 load address 0x9d0009e8
+.sdata          0xa0000000        0x0 load address 0x9d000ac0
                 0xa0000000                _sdata_begin = .
  *(.sdata .sdata.* .gnu.linkonce.s.*)
                 0xa0000000                _sdata_end = .
@@ -615,7 +619,7 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
                 0xa0000000                _data_end = .
                 0xa0000000                _bss_begin = .
 
-.sbss           0xa0000000        0x5 load address 0x9d0009e8
+.sbss           0xa0000000        0x5 load address 0x9d000ac0
                 0xa0000000                _sbss_begin = .
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
@@ -626,7 +630,7 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
                 0xa0000004                Xbee_Last_Read
                 0xa0000005                _sbss_end = .
 
-.bss            0xa0000005        0x3 load address 0x9d0009e8
+.bss            0xa0000005        0x3 load address 0x9d000ac0
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  *(COMMON)
@@ -636,24 +640,24 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
                 0xa0000008                _end = .
                 0xa0000008                _bss_end = .
 
-.heap           0xa0000008        0x0 load address 0x9d0009e8
+.heap           0xa0000008        0x0 load address 0x9d000ac0
                 0xa0000008                _heap = .
                 0xa0000008                . = (. + _min_heap_size)
                 0xa0000008                . = ALIGN (0x8)
 
-.stack          0xa0000008      0x400 load address 0x9d0009e8
+.stack          0xa0000008      0x400 load address 0x9d000ac0
                 0xa0000008                _splim = .
                 0xa0000008                _SPLIM = .
                 0xa0000408                . = (. + _min_stack_size)
  *fill*         0xa0000008      0x400 00
                 0xa0000408                . = ALIGN (0x8)
 
-.ramfunc        0xa0000800        0x0 load address 0x9d0009e8
+.ramfunc        0xa0000800        0x0 load address 0x9d000ac0
                 0xa0000800                _ramfunc_begin = .
  *(.ramfunc .ramfunc.*)
                 0xa0000800                . = ALIGN (0x4)
                 0xa0000800                _ramfunc_end = .
-                0x9d0009e8                _ramfunc_image_begin = LOADADDR (.ramfunc)
+                0x9d000ac0                _ramfunc_image_begin = LOADADDR (.ramfunc)
                 0x00000000                _ramfunc_length = SIZEOF (.ramfunc)
                 0x00000800                _bmxdkpba_address = (_ramfunc_begin - 0xa0000000)
                 0x00020000                _bmxdudba_address = 0x20000
@@ -688,10 +692,10 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
 .mdebug.abi32   0x00000000        0x0
  .mdebug.abi32  0x00000000        0x0 main.o
  .mdebug.abi32  0x00000000        0x0 xbee.o
- .mdebug.abi32  0x00000000        0x0 propellers.o
  .mdebug.abi32  0x00000000        0x0 leds.o
  .mdebug.abi32  0x00000000        0x0 supportboard.o
  .mdebug.abi32  0x00000000        0x0 pid.o
+ .mdebug.abi32  0x00000000        0x0 propellers.o
  .mdebug.abi32  0x00000000        0x0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
  .mdebug.abi32  0x00000000        0x0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
  .mdebug.abi32  0x00000000        0x0 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
@@ -703,10 +707,10 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
  *(.comment)
  .comment       0x00000000       0x4d main.o
  .comment       0x0000004d       0x4d xbee.o
- .comment       0x0000009a       0x4d propellers.o
- .comment       0x000000e7       0x4d leds.o
- .comment       0x00000134       0x4d supportboard.o
- .comment       0x00000181       0x4d pid.o
+ .comment       0x0000009a       0x4d leds.o
+ .comment       0x000000e7       0x4d supportboard.o
+ .comment       0x00000134       0x4d pid.o
+ .comment       0x00000181       0x4d propellers.o
  .comment       0x000001ce       0x4d C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
  .comment       0x0000021b       0x4d C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
  .comment       0x00000268       0x4d C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
@@ -733,13 +737,13 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
  .debug_aranges
                 0x00000020       0x20 xbee.o
  .debug_aranges
-                0x00000040       0x20 propellers.o
+                0x00000040       0x20 leds.o
  .debug_aranges
-                0x00000060       0x20 leds.o
+                0x00000060       0x20 supportboard.o
  .debug_aranges
-                0x00000080       0x20 supportboard.o
+                0x00000080       0x20 pid.o
  .debug_aranges
-                0x000000a0       0x20 pid.o
+                0x000000a0       0x20 propellers.o
  .debug_aranges
                 0x000000c0       0x28 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
  .debug_aranges
@@ -754,99 +758,99 @@ LOAD C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.
                 0x00000188       0x28 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
 
 .debug_pubnames
-                0x00000000      0x299
+                0x00000000      0x2cb
  *(.debug_pubnames)
  .debug_pubnames
                 0x00000000       0x28 main.o
  .debug_pubnames
                 0x00000028       0x50 xbee.o
  .debug_pubnames
-                0x00000078       0x82 propellers.o
+                0x00000078       0x51 leds.o
  .debug_pubnames
-                0x000000fa       0x1f leds.o
+                0x000000c9       0x58 supportboard.o
  .debug_pubnames
-                0x00000119       0x58 supportboard.o
+                0x00000121       0x20 pid.o
  .debug_pubnames
-                0x00000171       0x20 pid.o
+                0x00000141       0x82 propellers.o
  .debug_pubnames
-                0x00000191       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
+                0x000001c3       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
  .debug_pubnames
-                0x000001c2       0x33 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
+                0x000001f4       0x33 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
  .debug_pubnames
-                0x000001f5       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
+                0x00000227       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
  .debug_pubnames
-                0x00000215       0x24 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
+                0x00000247       0x24 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
  .debug_pubnames
-                0x00000239       0x36 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
+                0x0000026b       0x36 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
  .debug_pubnames
-                0x0000026f       0x2a C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
+                0x000002a1       0x2a C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
 
-.debug_info     0x00000000     0x256d
+.debug_info     0x00000000     0x262e
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x70f main.o
  .debug_info    0x0000070f      0x879 xbee.o
- .debug_info    0x00000f88      0x9a8 propellers.o
- .debug_info    0x00001930       0xe0 leds.o
- .debug_info    0x00001a10      0x87e supportboard.o
- .debug_info    0x0000228e      0x1bb pid.o
- .debug_info    0x00002449       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
- .debug_info    0x0000247a       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
- .debug_info    0x000024ab       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
- .debug_info    0x000024dc       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
- .debug_info    0x0000250d       0x30 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
- .debug_info    0x0000253d       0x30 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
+ .debug_info    0x00000f88      0x1c3 leds.o
+ .debug_info    0x0000114b      0x87e supportboard.o
+ .debug_info    0x000019c9      0x1bf pid.o
+ .debug_info    0x00001b88      0x982 propellers.o
+ .debug_info    0x0000250a       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
+ .debug_info    0x0000253b       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
+ .debug_info    0x0000256c       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
+ .debug_info    0x0000259d       0x31 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
+ .debug_info    0x000025ce       0x30 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
+ .debug_info    0x000025fe       0x30 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
 
-.debug_abbrev   0x00000000      0x6e9
+.debug_abbrev   0x00000000      0x703
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x12f main.o
  .debug_abbrev  0x0000012f      0x160 xbee.o
- .debug_abbrev  0x0000028f      0x175 propellers.o
- .debug_abbrev  0x00000404       0x32 leds.o
- .debug_abbrev  0x00000436      0x151 supportboard.o
- .debug_abbrev  0x00000587       0x88 pid.o
- .debug_abbrev  0x0000060f       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
- .debug_abbrev  0x00000634       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
- .debug_abbrev  0x00000659       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
- .debug_abbrev  0x0000067e       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
- .debug_abbrev  0x000006a3       0x23 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
- .debug_abbrev  0x000006c6       0x23 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
+ .debug_abbrev  0x0000028f       0x4a leds.o
+ .debug_abbrev  0x000002d9      0x151 supportboard.o
+ .debug_abbrev  0x0000042a       0x8a pid.o
+ .debug_abbrev  0x000004b4      0x175 propellers.o
+ .debug_abbrev  0x00000629       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
+ .debug_abbrev  0x0000064e       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
+ .debug_abbrev  0x00000673       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
+ .debug_abbrev  0x00000698       0x25 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
+ .debug_abbrev  0x000006bd       0x23 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
+ .debug_abbrev  0x000006e0       0x23 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
 
-.debug_line     0x00000000      0xc34
+.debug_line     0x00000000      0xcb3
  *(.debug_line)
  .debug_line    0x00000000      0x1bf main.o
  .debug_line    0x000001bf      0x1d2 xbee.o
- .debug_line    0x00000391      0x229 propellers.o
- .debug_line    0x000005ba       0x37 leds.o
- .debug_line    0x000005f1      0x1d8 supportboard.o
- .debug_line    0x000007c9       0x49 pid.o
- .debug_line    0x00000812       0xba C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
- .debug_line    0x000008cc       0xbc C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
- .debug_line    0x00000988       0xa9 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
- .debug_line    0x00000a31       0xad C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
- .debug_line    0x00000ade       0xa9 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
- .debug_line    0x00000b87       0xad C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
+ .debug_line    0x00000391       0xd3 leds.o
+ .debug_line    0x00000464      0x1d8 supportboard.o
+ .debug_line    0x0000063c       0x52 pid.o
+ .debug_line    0x0000068e      0x203 propellers.o
+ .debug_line    0x00000891       0xba C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
+ .debug_line    0x0000094b       0xbc C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
+ .debug_line    0x00000a07       0xa9 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
+ .debug_line    0x00000ab0       0xad C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
+ .debug_line    0x00000b5d       0xa9 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
+ .debug_line    0x00000c06       0xad C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
 
-.debug_frame    0x00000000      0x34c
+.debug_frame    0x00000000      0x3bc
  *(.debug_frame)
  .debug_frame   0x00000000       0x50 main.o
  .debug_frame   0x00000050       0x80 xbee.o
- .debug_frame   0x000000d0       0xd4 propellers.o
- .debug_frame   0x000001a4       0x2c leds.o
- .debug_frame   0x000001d0       0x84 supportboard.o
- .debug_frame   0x00000254       0x30 pid.o
- .debug_frame   0x00000284       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
- .debug_frame   0x000002a4       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
- .debug_frame   0x000002c4       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
- .debug_frame   0x000002e4       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
- .debug_frame   0x00000304       0x28 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
- .debug_frame   0x0000032c       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
+ .debug_frame   0x000000d0       0x9c leds.o
+ .debug_frame   0x0000016c       0x84 supportboard.o
+ .debug_frame   0x000001f0       0x30 pid.o
+ .debug_frame   0x00000220       0xd4 propellers.o
+ .debug_frame   0x000002f4       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
+ .debug_frame   0x00000314       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
+ .debug_frame   0x00000334       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-reset.o)
+ .debug_frame   0x00000354       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-on-bootstrap.o)
+ .debug_frame   0x00000374       0x28 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_mv_int_lib.o)
+ .debug_frame   0x0000039c       0x20 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libmchp_peripheral_32MX795F512H.a(int_enable_interrupts_lib.o)
 
 .debug_str      0x00000000      0x435
  *(.debug_str)
  .debug_str     0x00000000       0x12 main.o
  .debug_str     0x00000012       0x12 xbee.o
- .debug_str     0x00000024       0x12 propellers.o
- .debug_str     0x00000036       0x12 supportboard.o
+ .debug_str     0x00000024       0x12 supportboard.o
+ .debug_str     0x00000036       0x12 propellers.o
  .debug_str     0x00000048       0xec C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-general-exception-handler.o)
  .debug_str     0x00000134       0xa9 C:/Program Files (x86)/Microchip/mplabc32/v1.12/bin/../lib/gcc/pic32mx/3.4.4/../../../../pic32mx/lib\libc.a(default-bootstrap-exception-handler.o)
                                  0xf0 (size before relaxing)

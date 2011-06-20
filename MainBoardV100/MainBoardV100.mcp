@@ -32,6 +32,7 @@ file_004=.
 file_005=.
 file_006=.
 file_007=.
+file_008=.
 [GENERATED_FILES]
 file_000=no
 file_001=no
@@ -41,6 +42,7 @@ file_004=no
 file_005=no
 file_006=no
 file_007=no
+file_008=no
 [OTHER_FILES]
 file_000=no
 file_001=no
@@ -50,15 +52,17 @@ file_004=no
 file_005=no
 file_006=no
 file_007=no
+file_008=no
 [FILE_INFO]
 file_000=main.c
 file_001=xbee.c
-file_002=..\..\..\Pic32 Programming\LedBlinker\propellers.c
-file_003=leds.c
-file_004=supportboard.c
-file_005=pid.c
+file_002=leds.c
+file_003=supportboard.c
+file_004=pid.c
+file_005=propellers.c
 file_006=main.h
 file_007=leds.h
+file_008=pid.h
 [SUITE_INFO]
 suite_guid={14495C23-81F8-43F3-8A44-859C583D7760}
 suite_state=

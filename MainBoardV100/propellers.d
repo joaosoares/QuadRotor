@@ -1,1 +1,1 @@
-propellers.o: ..\..\..\Pic32\ Programming\LedBlinker\propellers.c
+propellers.o: propellers.c pid.h

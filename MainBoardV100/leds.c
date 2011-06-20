@@ -21,7 +21,10 @@
  */
 void LED_Init()
 {
-
+	AD1PCFG = ~LED2;
+	TRISBCLR = LED2;
+	TRISECLR = LED1;
+	
 }
 
 /* Function: LED2_On
@@ -30,7 +33,7 @@ void LED_Init()
  *
  * Usage:
  * LED2_On();
- *
+ */
 void LED2_On()
 {
 	PORTBSET = LED2;
@@ -42,8 +45,32 @@ void LED2_On()
  *
  * Usage:
  * LED1_On();
- *
+ */
 void LED1_On()
 {
 	PORTESET = LED1;
-}	*/
+}
+
+/* Function: LED2_Off
+ *
+ * Turns LED2 off.
+ *
+ * Usage:
+ * LED2_Off();
+ */
+void LED2_Off()
+{
+	PORTBCLR = LED2;
+}
+
+/* Function: LED1_Off
+ *
+ * Turns LED1 off.
+ *
+ * Usage:
+ * LED1_Off();
+ */
+void LED1_Off()
+{
+	PORTECLR = LED1;
+}

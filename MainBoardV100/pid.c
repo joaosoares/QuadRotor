@@ -8,17 +8,19 @@
  * Available at <http://www.eetimes.com/ContentEETimes/Documents/Embedded.com/2000/f-wescot.pdf>
  *
  */
+ 
+#include "pid.h"
 
 /* Structure of the variable type SPid */
-typedef struct {
-	double dState;			//Last position output
+struct PID {
+	double dState;			// Last position output
 	double iState;			// Integrator state
-	double iMax, iMin;		// Maximum and minimu allowable integrator state
+	double iMax, iMin;		// Maximum and minimum allowable integrator state
 	
 	double iGain;			// integral gain
 	double pGain;			// proportional gain
 	double dGain;			// derivative gain
-} SPid;
+} ;
 
 double UpdatePID(SPid * pid, double error, double position)
 {

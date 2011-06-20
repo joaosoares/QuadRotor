@@ -14,5 +14,7 @@
 #define LED2 0x8000 
 
 void LED_Init();
-//void LED1_On();
-//void LED2_On();
+void LED1_On();
+void LED2_On();
+void LED2_Off();
+void LED1_Off();
