@@ -14,6 +14,7 @@
 
 void Xbee_Write(char);
 void PPM1_On(int);
+//void LED1_On();
 
 #define SUPPORT_BAUD 19 // 250kHz
 /* Function: SupportBoard_Init
@@ -61,7 +62,7 @@ void __ISR(_UART_1A_VECTOR, ipl3) SupportBoard_Receive( void)
 {
 	char data = U1ARXREG;
 	//PPM1_On(900);
-	PORTESET = 0x0020;
+//	LED1_On();
 	Xbee_Write(data);
 	mU1ARXClearIntFlag();
 }	

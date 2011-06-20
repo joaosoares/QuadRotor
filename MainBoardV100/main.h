@@ -7,11 +7,12 @@
 #include <p32xxxx.h>
 #include <plib.h>
 #include "leds.h"
-void Timer2_Micros(int);
+
 void Init_All();
+
+void Timer2_Micros(int);
 void PPM1_Poll(int);
 void Xbee_Init();
 void SupportBoard_Init();
 void Timer1_Init();
 void PPM_Init();
-void Set_High(int);

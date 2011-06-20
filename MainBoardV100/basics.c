@@ -22,8 +22,3 @@
  * Set_High(LED1);
  *
  */
-void Set_High(int *thebit)
-{
-	*thebit = 0x0010;
-}
-

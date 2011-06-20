@@ -55,8 +55,8 @@ file_000=main.c
 file_001=xbee.c
 file_002=..\..\..\Pic32 Programming\LedBlinker\propellers.c
 file_003=leds.c
-file_004=basics.c
-file_005=supportboard.c
+file_004=supportboard.c
+file_005=pid.c
 file_006=main.h
 file_007=leds.h
 [SUITE_INFO]

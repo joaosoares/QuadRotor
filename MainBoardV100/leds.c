@@ -9,4 +9,41 @@
  *
  */
 
- 
+#include "leds.h"
+
+/* Function: LED_Init
+ *
+ * Sets the data direction of both LEDs through the TRIS register.
+ * Also disables the Analog configs on the led on PORTB
+ *
+ * Usage:
+ * LED_init();
+ */
+void LED_Init()
+{
+
+}
+
+/* Function: LED2_On
+ *
+ * Turns LED2 on.
+ *
+ * Usage:
+ * LED2_On();
+ *
+void LED2_On()
+{
+	PORTBSET = LED2;
+}
+
+/* Function: LED1_On
+ *
+ * Turns LED1 on.
+ *
+ * Usage:
+ * LED1_On();
+ *
+void LED1_On()
+{
+	PORTESET = LED1;
+}	*/

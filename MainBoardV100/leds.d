@@ -1,1 +1,1 @@
-leds.o: leds.c
+leds.o: leds.c leds.h

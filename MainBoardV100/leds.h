@@ -9,13 +9,10 @@
  */
  
 #include <p32xxxx.h>
-#include "plib.h"
 
-#define LED1PORT PORTE
-#define LED1 PORTEbits.RE5 //Location of LED 1
-#define LED2 PORTBbits.RB15 // Location of LED 2
+#define LED1 0x0020 // 0000 0000 0000 0010 0000
+#define LED2 0x8000 
 
-#define LED1TRIS 0x0010 // port 5, so 0001 0000
-#define LED2TRIS 0x8000 // port 15, 1000 0000 0000 0000
-
-void Set_High(int);
+void LED_Init();
+//void LED1_On();
+//void LED2_On();
