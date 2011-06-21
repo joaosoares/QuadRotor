@@ -8,12 +8,9 @@
 #include <plib.h>
 #include "leds.h"
 #include "engine.h"
+#include "counter.h"
 
 void Init_All();
 
-void Timer2_Micros(int);
-void PPM1_Poll(int);
 void Xbee_Init();
 void SupportBoard_Init();
-void Timer1_Init();
-void PPM_Init();

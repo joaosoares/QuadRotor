@@ -81,6 +81,6 @@ void __ISR(_UART_2B_VECTOR, ipl3) Xbee_Read (void)
 {
 	char data = U2BRXREG;
 	Xbee_Last_Read = data;
-	PPM1_On(900);
+//	PPM1_On(900);
 	mU2BRXClearIntFlag();
 }	

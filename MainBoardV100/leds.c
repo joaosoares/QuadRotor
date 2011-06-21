@@ -21,7 +21,7 @@
  */
 void LED_Init()
 {
-	AD1PCFG = ~LED2;
+	AD1PCFG &= ~LED2;
 	TRISBCLR = LED2;
 	TRISECLR = LED1;
 	

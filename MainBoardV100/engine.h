@@ -1,6 +1,7 @@
 /*
  * Jun 20, 2011
  *
+ * Quadrotor Main Board
  * Header file for engine.c
  *
  */
@@ -8,6 +9,7 @@
 // Include files
 #include <p32xxxx.h>
 #include "plib.h"
+#include "leds.h"
 
 // Definitions
 
@@ -23,7 +25,7 @@
 #define PPM4 PORTDbits.RD4
 #define PPM4TRIS 0x0010 // Port D4: 0000 0000 0001 0000
 
-// Public function declarations
+// Public functions declarations
 
 //PPM1 Functions
 void PPM1_Init();

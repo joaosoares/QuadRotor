@@ -30,11 +30,14 @@ main()
  */
 void Init_All()
 {
+	LED_Init();
 	INTEnableSystemMultiVectoredInt();
 	Xbee_Init();
 	SupportBoard_Init();
-	Timer1_Init();
-	PPM_Init();
-	LED_Init();
+	PPM1_Init();
+	PPM2_Init();
+	PPM4_Init();
+	PPM3_Init();
+	Counter_Init();
 	
 }	
