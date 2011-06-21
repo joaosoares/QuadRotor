@@ -7,6 +7,7 @@
 #include <p32xxxx.h>
 #include <plib.h>
 #include "leds.h"
+#include "engine.h"
 
 void Init_All();
 

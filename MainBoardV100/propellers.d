@@ -1,1 +1,1 @@
-propellers.o: propellers.c pid.h
+propellers.o: propellers.c pid.h leds.h

@@ -11,6 +11,7 @@
 
 #include<p32xxxx.h>
 #include "plib.h" 
+#include "leds.h"
 
 void Xbee_Write(char);
 void PPM1_On(int);
@@ -61,8 +62,7 @@ void SupportBoard_Write(char data)
 void __ISR(_UART_1A_VECTOR, ipl3) SupportBoard_Receive( void)
 {
 	char data = U1ARXREG;
-	//PPM1_On(900);
-//	LED1_On();
 	Xbee_Write(data);
+	LED2_On();
 	mU1ARXClearIntFlag();
 }	

@@ -10,8 +10,8 @@
 main()
 {
 	Init_All();
-	
-	//LED1_On();
+	LED1_Off();
+	LED2_Off();
 	while(1)
 	{
 		

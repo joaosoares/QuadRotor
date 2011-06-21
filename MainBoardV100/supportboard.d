@@ -1,1 +1,1 @@
-supportboard.o: supportboard.c
+supportboard.o: supportboard.c leds.h

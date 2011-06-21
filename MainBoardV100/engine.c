@@ -2,10 +2,10 @@
  * Jun 16th, 2011
  *
  * Quadrotor Main Board
- * Modules for Propeller Control
+ * Modules for Engine Control
  *
  * Timer based modules for Pulse Position Modulation.
- * Each propeller has its own timer interrupt module.
+ * Each engine has its own timer interrupt module.
  * This low level module is used by other modules to form pairs of
  * motors that can do simple actions.
  * Then, these actions will be used for PID control based on the
@@ -15,68 +15,25 @@
  * 
  */
 
-//Necessary includes
-#include <p32xxxx.h>
-#include "plib.h"
-#include "pid.h"
+#include "engine.h"
 
-#define PRESCALER 4
-#define PPM1 PORTDbits.RD7
-#define PPM1TRIS 0x0080 // Port D 7: 0000 0000 1000 0000
-
-void PPM1_On(int);
-//Variables for PPM
-int delay_fork = 0;
-
-/* Function: Timer1_Init
+/* Function: PPM1_Init
  *
- * Starts Timer 1, with interrupts disabled and period register maximum
- *
- */
-
-/* Function: Timer2_Interrupt
- *
- * Handles the interrupt created when Timer2 was activated. Then, turns
- * off the timer and resets it.
- * 
- */
-void __ISR(_TIMER_2_VECTOR, ipl4) Timer2_Interrupt (void)
-{
-	PPM1 = 0;
-	T2CONbits.ON = 0; // Disable timer
-	TMR2 = 0; // Clear timer
-	mT2ClearIntFlag();
-}	
-
-/* Function: Timer1_Interrupt
- *
- * Handles the interrupt for Timer 1, turning PPM high.
- *
- */
-void __ISR(_TIMER_1_VECTOR, ipl4) Timer1_Interrupt (void)
-{
-	PPM1 = 1;
-	PPM1_On(1500);
-	mT1ClearIntFlag();
-}	
-
-/* Function: PPM_Init
- *
- * Initializes the 4 PPM, setting data direction as output (TRIS)
- * No arguments.
+ * Initializes the 1st PPM, setting data direction as output (TRIS)
+ * No arguments. Uses Timer 2, configuring it for interrupts.
  *
  * Usage:
- * PPM_Init();
- *
+ * PPM1_Init(); 
  */
-void PPM_Init()
+void PPM1_Init()
 {
 	mT2ClearIntFlag();
 	mT2SetIntPriority(4);
 	mT2IntEnable(1);
 	TRISDCLR = PPM1TRIS;
 	PPM1=0;
-}	
+	PPM1_On(500);
+}
 
 /* Function: PPM1_On
  *
@@ -85,7 +42,6 @@ void PPM_Init()
  * 
  * Arguments:
  * duration - the amount in microseconds of the pulse
- *
  */
 void PPM1_On (int duration)
 {
@@ -96,27 +52,22 @@ void PPM1_On (int duration)
 	PPM1 = 1; // PPM1 is high
 }	
 
-/* Function: Timer1_Init
- * 
- * Starts Timer 1 with a high prescaler so it can measure milliseconds.
- * No arguments
+/* Function: PPM1_Interrupt
  *
- * Usage:
- * Timer1_Init();
- *
+ * Handles the interrupt created when Timer2 was activated for PPM1. 
+ * Then, turns off the timer and resets it.
  */
-void Timer1_Init()
+void __ISR(_TIMER_2_VECTOR, ipl4) PPM1_Interrupt (void)
 {
-	T1CON = 0;
-	T1CONSET = 0x0020;
-	TMR1 = 0x00;
-	PR1 = (20 * 20000000) / (64*1000);
-	T1CONbits.ON = 1;
-	mT1SetIntPriority(4);
-	mT1IntEnable(1);
-}	
+	PPM1 = 0;
+	T2CONbits.ON = 0; // Disable timer
+	TMR2 = 0; // Clear timer
+	mT2ClearIntFlag();
+}
 
-/* Function: PPM1_Poll
+/* DEPRECATED FUNCTION -- didn't work
+ * 
+ * Function: PPM1_Poll
  *
  * If PPM1 is low, start the timer to space between the interrupts.
  * When around an user defined number of milliseconds have ellapsed
@@ -135,11 +86,12 @@ void Timer1_Init()
  *	 PPM1_Poll(20);
  *	 ...
  *
- */
+ *
 void PPM1_Poll(int millis)
 {
 	int time = (millis * 20000000) / (64 * 1000); // Formula is Pcb / Prescaler * 10e3 (a millisecond)
 	while(TMR1 - delay_fork > time);
 	PPM1_On(900);
 	delay_fork = TMR1;
-}	
+}
+ */
