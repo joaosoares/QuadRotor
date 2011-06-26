@@ -43,42 +43,7 @@ void Counter_Init()
  */
 void __ISR(_TIMER_1_VECTOR, ipl7) Counter_Interrupt (void)
 {
-	//UpdatePID();
-	switch (Xbee_Last_Read) {
-		case 0x10:
-			PPM2_On(1000);
-			break;
-		case 0x11:
-			PPM2_On(1100);
-			break;
-		case 0x12:
-			PPM2_On(1200);
-			break;
-		case 0x13:
-			PPM2_On(1300);
-			break;
-		case 0x14:
-			PPM2_On(1400);
-			break;
-		case 0x15:
-			PPM2_On(1500);
-			break;
-		case 0x16:
-			PPM2_On(1600);
-			break;
-		case 0x17:
-			PPM2_On(1700);
-			break;
-		case 0x18:
-			PPM2_On(1800);
-			break;
-		case 0x19:
-			PPM2_On(1900);
-			break;
-		default:
-			PPM2_On(900);
-			break;
-	}			
+	UpdatePID();			
 	LED1_On();
 	mT1ClearIntFlag();
 }

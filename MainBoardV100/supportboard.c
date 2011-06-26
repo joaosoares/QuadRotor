@@ -5,9 +5,18 @@
  * Support Board Communication Modules
  *
  * These modules serve to receive data from the Support Board (an
- * Atmega 328) via UART. Later on, they will decode the packet sent by it.
+ * Atmega 328) via UART.
+ *
+ * There are two packet handlers:
+ * One receives the data from the support board and the other sends data
+ * to the support board as necessary.
+ *
+ * How I will implement the packet:
+ * - Create a structure where every piece of data has its own variable
+ * - Have a 
  *
  */
+
 
 #include<p32xxxx.h>
 #include "plib.h" 
@@ -19,7 +28,7 @@ void PPM1_On(int);
 
 #define SUPPORT_BAUD 19 // 250kHz
 
-
+char * datapacket;
 
 /* Function: SupportBoard_Init
  *
@@ -69,3 +78,4 @@ void __ISR(_UART_1A_VECTOR, ipl3) SupportBoard_Receive( void)
 	//LED2_On();
 	mU1ARXClearIntFlag();
 }	
+

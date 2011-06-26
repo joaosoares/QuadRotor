@@ -2,7 +2,7 @@
  * Jun 16th, 2011
  *
  * Quadrotor Main Board
- * Modules for Xbee Peripherical
+ * Modules for PC Communication
  *
  * These modules are used for UART communication with the
  * Xbee radio for wireless communication between the PC and
@@ -10,8 +10,8 @@
  * There is a initialization, a write, a read function.
  * The baud rate can be modified as needed.
  *
- * Andrea Veciana, João Soares and Paulo Carvalho
  */
+
 
 //File with definitions and function declarations
 #include <p32xxxx.h>
@@ -22,7 +22,10 @@
 #define XBEE_BAUD 129 // [ 20000000 (fpb) / 4 * 250000 (desired baud) ]- 1
 char Xbee_Last_Read;
 
-void PPM1_On(int);
+//Structure for data packet
+typedef struct MainPacket {
+	char
+
 
 /* Function: Xbee_Serial_Init
  *
@@ -77,10 +80,14 @@ void Xbee_Write(char data)
  * Usage is automatic, since it is interrupt based.
  *
  */
-void __ISR(_UART_2B_VECTOR, ipl3) Xbee_Read (void)
+void __ISR(_UART_2B_VECTOR, ipl3) PC_Receive (void)
 {
 	char data = U2BRXREG;
 	Xbee_Last_Read = data;
-//	PPM1_On(900);
+	
+	
+	
+	
+	
 	mU2BRXClearIntFlag();
 }	
