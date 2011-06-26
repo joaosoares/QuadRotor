@@ -6,6 +6,7 @@ The Quadrotor is a helicopter-like flying robot. It has the capacity of staying 
 
 ## Who built it?
 We are three students located in Brazil -- more specifically, in the city of Salvador, Bahia.
-- Paulo Carvalho
-- Jo„o Soares
-- Andrea Veciana
+
+* Paulo Carvalho
+* Jo√£o Soares
+* Andrea Veciana
