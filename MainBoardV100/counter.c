@@ -43,7 +43,7 @@ void Counter_Init()
  */
 void __ISR(_TIMER_1_VECTOR, ipl7) Counter_Interrupt (void)
 {
-	UpdatePID();			
+//	UpdatePID();			
 	LED1_On();
 	mT1ClearIntFlag();
 }

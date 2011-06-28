@@ -6,6 +6,14 @@
  */
 //Necessary inclusions
 #include <p32xxxx.h>
+#include "plib.h"
+
+/* DEFINITIONS */
+
+//For the Xbee
+#define XBEE_RESET PORTEbits.RE6
+#define XBBEE_STRENGHT PORTBbits.RB9
+#define XBEE_BAUD 129 // [ 20000000 (fpb) / 4 * 250000 (desired baud) ]- 1 = ??
 
 //Definitions for packet order
 #define START 0
@@ -43,3 +51,5 @@
 #define SD_FAIL 37
 #define END 100
 
+/* FUNCTION DECLARATIONS */
+void Xbee_Init();

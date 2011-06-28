@@ -5,7 +5,8 @@
  * PID Control Functions
  *
  * Code (barely) adapted from Tim Wescott, "PID without a PhD".
- * Available at <http://www.eetimes.com/ContentEETimes/Documents/Embedded.com/2000/f-wescot.pdf>
+ * Available at <http://www.eetimes.com/ContentEETimes/Documents/
+ Embedded.com/2000/f-wescot.pdf>
  *
  */
  
@@ -23,7 +24,7 @@ typedef struct PID {
 } SPid;
 
 //typedef struct PID SPid;
-
+/*
 SPid PidYaw;
 SPid PidRoll;
 SPid PidPitch;
@@ -37,8 +38,8 @@ pPidPitch = &PidPitch;
 pPidYaw->PidYaw.iGain = 0.001;
 pPidYaw->pGain = 10;
 pPidYaw->dGain = 0;
-
-double UpdatePID(SPid * pid, double error, double position)
+*/
+double UpdatePID(struct PID * pid, double error, double position)
 {
 	double pTerm, iTerm, dTerm;
 	
