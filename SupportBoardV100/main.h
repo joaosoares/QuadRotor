@@ -1,67 +1,73 @@
-/*		Header File for main.c	    */
-/************************************/
+/*	Header file for main.c													**
+**	Declares all functions, definitions and includes necessary modules for	**
+**	respective functions.													**
+**																			**
+**	By Paulo Carvalho V2.00													*/
 
-/* Include Necessary Headers */
+/****************************************************************************/
+/*	Make necessary Inclusions	*/
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/delay.h>
-#include <avr/wdt.h>
-#include <util/delay.h>
-#include "i2cmaster.h"
 
-/************************************/
-/* Declare Functions used in main.c */
+/****************************************************************************/
+/*	Declares Functions from all modules that might be called on main	*/
 
-/* Serial UART Comunication */
+/*	Initialization	*/
+void gyro_init(void);
+void accel_init(void);
+void int_init(void);
 void uart_init(void);
-uint8_t uart_read(void);
+void i2c_init(void);
+void adc_init(void);
+void wdt_init(void);
+void spi_init(void);
+ 
+/*	Sensor Reading	*/
+int gyro_read(int *);
+int accel_read(int *);
+int mag_read(int);
+int adc_read(int *);
+
+/*	Supplementary Functions	*/
+void wdt_reset(void);
 void uart_write(char);
 void uart_write2(int);
+char uart_read(void);
+void filter(int *, int *, int *, int*); 
+void initialize(void);
 
-/* SPI Comunication */
-void spi_init(void);
-uint8_t spi_read(void);
-void spi_write(char);
+/******************************************************************************/
+/*	Make Necessary Definitions	*/
 
-/* ADC Comunication */
-void adc_init(void);
-uint16_t adc_read(char);
+/*	LED	*/
+#define LEDOK 0x40;
+#define LEDS5 0x20;
 
-/* i2c Comunication */
-void gyro_init(void);
-void gyro_read(int *);
-void accel_read(int *);
-void accel_init(void);
+/******************************************************************************/
+/*	Declare Global Variables	*/
 
-/* Watch Dog Timer */
-void wdt_init(uint8_t);
+/*	Stores Filtered Data (x100) Converted into integer	*/  
+int Angle[3];
+int Rate[3];
 
-/* IMU Functions */
-// REQUIRES MORE KNOWLEDGE!!!!!!!!
+/*	Stored Data Received from Sensors as Analog to Digital Conversion	*/
+/* 	16 Bit Reading	*/
+int Gyro_Adc[4];
 
-/* Other Functions */
-void initialize(void); //Performs Initialization Routine
-void interrupt_init(void); //Performs Initialization of Diverse Interrupts  
+/*	10 Bit Reading	*/
+int Accel_Adc[3];
+int Adc_Adc[6];
+int Mag_Adc[3];
 
-/************************************/
-/* Makes Necessary Definitions */
+/* Current Axis Being Read in Magnetometer */
+int Axis = 0;
 
-/* SCALLER is the number to be shifterd into WDP0 Register
-** Of the WatchDog Timer and therefore defines the Prescaller
-** The setting of 4 Sets it to a 0.25 ms period				*/
-#define SCALLER 4
 
-/* LED Pins */
-#define LEDOK 0x40 //PD6
-#define LEDS5 0x20 //PD5
 
-/************************************/
-/* Declare Global Variables Accessible to All Files */
-extern uint16_t Mag_Data; //Read Data from the Magnetometer
-extern uint8_t Pic_Data; //Last Received Byte from PIC32MX
-int Gyro_Raw[4]; //Gyro Axis Raw Measurement ADC + Temp
-int Accel_Raw[3]; //Accel Axis Raw Measurement from ADC
-int Acc_Degree; //Variable to Store Degree Data
-double AccelX_G; //Raw Gravitational Vectors
-double AccelY_G;
-double AccelZ_G;
+
+
+
+
+
+
+

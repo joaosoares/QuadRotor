@@ -1,11 +1,11 @@
 ###############################################################################
-# Makefile for the project SupportBoardV100
+# Makefile for the project SupportBoard
 ###############################################################################
 
 ## General Flags
-PROJECT = SupportBoardV100
+PROJECT = SupportBoard
 MCU = atmega328p
-TARGET = SupportBoardV100.elf
+TARGET = SupportBoard.elf
 CC = avr-gcc
 
 CPP = avr-g++
@@ -25,7 +25,7 @@ ASMFLAGS += -x assembler-with-cpp -Wa,-gdwarf2
 
 ## Linker flags
 LDFLAGS = $(COMMON)
-LDFLAGS +=  -Wl,-Map=SupportBoardV100.map
+LDFLAGS +=  -Wl,-Map=SupportBoard.map
 
 
 ## Intel Hex file production flags
@@ -37,13 +37,13 @@ HEX_EEPROM_FLAGS += --change-section-lma .eeprom=0 --no-change-warnings
 
 
 ## Objects that must be built in order to link
-OBJECTS = main.o uart.o wdt.o adc.o spi.o i2c.o twimaster.o interrupt.o 
+OBJECTS = main.o uart.o interrupt.o wdt.o inertial.o adc.o filter.o mag.o twimaster.o 
 
 ## Objects explicitly added by the user
 LINKONLYOBJECTS = 
 
 ## Build
-all: $(TARGET) SupportBoardV100.hex SupportBoardV100.eep SupportBoardV100.lss size
+all: $(TARGET) SupportBoard.hex SupportBoard.eep SupportBoard.lss size
 
 ## Compile
 main.o: ../main.c
@@ -52,22 +52,25 @@ main.o: ../main.c
 uart.o: ../uart.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
+interrupt.o: ../interrupt.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
 wdt.o: ../wdt.c
+	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
+
+inertial.o: ../inertial.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 adc.o: ../adc.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-spi.o: ../spi.c
+filter.o: ../filter.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
-i2c.o: ../i2c.c
+mag.o: ../mag.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 twimaster.o: ../twimaster.c
-	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
-
-interrupt.o: ../interrupt.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c  $<
 
 ##Link
@@ -90,9 +93,9 @@ size: ${TARGET}
 ## Clean target
 .PHONY: clean
 clean:
-	-rm -rf $(OBJECTS) SupportBoardV100.elf dep/* SupportBoardV100.hex SupportBoardV100.eep SupportBoardV100.lss SupportBoardV100.map
+	-rm -rf $(OBJECTS) SupportBoard.elf dep/* SupportBoard.hex SupportBoard.eep SupportBoard.lss SupportBoard.map
 
 
 ## Other dependencies
--include $(shell mkdir dep 2>/dev/null) $(wildcard dep/*)
+-include $(shell mkdir dep 2>NUL) $(wildcard dep/*)
 

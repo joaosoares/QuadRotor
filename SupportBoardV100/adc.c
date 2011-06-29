@@ -1,9 +1,13 @@
-/* Module for Analog to Digital Conversion Functions */
+/*	Module for Analog to Digital Conversion Initialization and Read Functions 	**
+**	By Paulo Carvalho V2.00														*/ 
 
+/* Make Necessary Inclusions of Headers */
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-uint8_t stop = 0;
+/* Declare Variable */
+/* Variable to Store Read Data */
+int data; 
 
 /* Function to Initialize ADC */
 void adc_init(void)
@@ -14,16 +18,21 @@ void adc_init(void)
 /* Function for Reading ADC */
 int adc_read(char channel)
 {
-	int data; //Variable to Store Read Data
-	ADMUX = (0x0F & (channel << MUX0)); //Select ADC Pin to Read with Safety Mask
-	ADCSRA = (1 << ADSC); //Starts Conversion and Enables Interrupt
-	while( ! (ADCSRA & (1 << ADSC))); //Holds Program Until Conversion is Done
-	stop = 0;
-	/* Read Data */
-	data = (ADCL);
-	data |= (ADCH << 8);
+	/* Select ADC Pin to Read with Safety Mask */
+	ADMUX = (0x0F & (channel << MUX0)); 
 
-	return data; //Return Data
+	/* Starts Conversion and Enables Interrupt */
+	ADCSRA = (1 << ADSC); 
+
+	/* Holds Program Until Conversion is Done */
+	while( ! (ADCSRA & (1 << ADSC))); 
+
+	/* Read Data */
+	data = (char)(ADCL);
+	data |= (char)(ADCH << 8);
+	
+	/* Return ADC Data */
+	return data; 
 }
 
 		 
