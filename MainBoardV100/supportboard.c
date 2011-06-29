@@ -23,12 +23,10 @@
 #include "leds.h"
 
 void Xbee_Write(char);
-void PPM1_On(int);
-//void LED1_On();
 
 #define SUPPORT_BAUD 19 // 250kHz
 
-char * datapacket;
+#define OVERFLOW U1ASTAbits.OERR
 
 /* Function: SupportBoard_Init
  *
@@ -39,7 +37,6 @@ char * datapacket;
  * main(){
  *	 ...
  *	 SupportBoard_Init();
- *
  */
 void SupportBoard_Init (void)
 {
@@ -71,10 +68,18 @@ void SupportBoard_Write(char data)
 	U1ATXREG = data;
 }	
 
+/* Interrupt function: SupportBoard_Receive
+ *
+ * Packet:
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
 void __ISR(_UART_1A_VECTOR, ipl3) SupportBoard_Receive( void)
-{
-	char data = U1ARXREG;
-//	Xbee_Write(data);
-//	LED2_On();
-	mU1ARXClearIntFlag();
+{	
+	char byte = U1ARXREG;
+	Xbee_Write(byte);
 }	
